@@ -1,4 +1,4 @@
-require 'md5'
+require 'digest/md5'
 
 require 'sloono/extensions'
 require 'sloono/sms'
@@ -31,7 +31,7 @@ module Sloono
       if password =~ /\A[a-zA-Z0-9]{32}\Z/
         password
       else
-        MD5.hexdigest(password)
+        Digest::MD5.hexdigest(password)
       end
     end
   end

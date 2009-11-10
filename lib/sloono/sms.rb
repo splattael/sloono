@@ -21,7 +21,7 @@ module Sloono
     def from(arg=nil)
       if arg
         arg = arg.to_i
-        raise ArgumentError.new "must be between 1..5" unless FROM_RANGE.include?(arg)
+        raise ArgumentError.new("must be between 1..5") unless FROM_RANGE.include?(arg)
         @from = arg
       end
       @from
@@ -40,7 +40,7 @@ module Sloono
     def type(arg=nil)
       if arg
         arg = arg.to_s.downcase
-        raise ArgumentError.new "must be one of [#{TYPES.join(', ')}]" unless TYPES.include?(arg)
+        raise ArgumentError.new("must be one of [#{TYPES.join(', ')}]") unless TYPES.include?(arg)
         @type = arg
       end
       @type

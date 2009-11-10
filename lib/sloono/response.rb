@@ -13,7 +13,7 @@ module Sloono
       def initialize(code, text)
         @code = code.to_i
         @text = text
-        raise ArgumentError.new "code out of range #{code}" if status == :unknown
+        raise ArgumentError.new("code out of range #{code}") if status == :unknown
       end
 
       def status
