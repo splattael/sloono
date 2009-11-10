@@ -14,7 +14,7 @@ See http://www.sloono.de/api-sms-gateway-http.html for HTTP-API.
     sms.type :discount
     sms.text "Hello world"
     sms.to   "+49 123 45678"
-    sms.send!
+    sms.send! # or info!
   end
 
   case response.status

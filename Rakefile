@@ -15,8 +15,8 @@ Jeweler::Tasks.new do |gem|
 
   gem.has_rdoc = true
   gem.extra_rdoc_files = [ "README.rdoc" ]
-  
-  # gem.add_development_dependency "mocha"
+
+  gem.add_development_dependency "riot"
 
   gem.test_files = Dir.glob('test/test_*.rb')
 end
