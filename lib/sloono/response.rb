@@ -17,11 +17,12 @@ module Sloono
       end
 
       def status
-        if success?
+        case code
+        when SUCCESS_RANGE
           :success
-        elsif input_error?
+        when INPUT_ERROR_RANGE
           :input_error
-        elsif system_error?
+        when SYSTEM_ERROR_RANGE
           :system_error
         else
           :unknown
@@ -29,15 +30,15 @@ module Sloono
       end
 
       def success?
-        SUCCESS_RANGE.include?(code)  
+        status == :success
       end
 
       def input_error?
-        INPUT_ERROR_RANGE.include?(code)
+        status == :input_error
       end
       
       def system_error?
-        SYSTEM_ERROR_RANGE.include?(code)
+        status == :system_error
       end
 
       def error?
