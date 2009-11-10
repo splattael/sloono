@@ -4,6 +4,8 @@ module Sloono
     FROM_RANGE = 1..5
     TYPES = %w(0 1 2 3 discount basic lite pro flash)
 
+    attr_accessor :api
+
     def initialize(options={}, &block)
       @api = options[:api]
 

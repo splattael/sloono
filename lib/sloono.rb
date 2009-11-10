@@ -19,6 +19,11 @@ module Sloono
       block.yield_or_eval(self) if block
     end
 
+    def sms(options={}, &block)
+      options[:api] = self
+      SMS.new(options, &block)
+    end
+
     private
 
     def crypt_password(password)
