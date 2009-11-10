@@ -1,0 +1,48 @@
+= SMS API for sloono.de
+
+Simple SMS API for http://www.sloono.de
+See http://www.sloono.de/api-sms-gateway-http.html for HTTP-API.
+
+== Usage
+
+  require 'sloono'
+
+  api = Sloono.new(username, password)
+
+  response = api.sms do |sms|
+    sms.from 1
+    sms.type :discount
+    sms.text "Hello world"
+    sms.to   "+49 123 45678"
+    sms.send!
+  end
+
+  case response.status
+  when :success
+    puts response.text
+    puts response.price
+  else
+    puts response.status_code
+    puts response.status_text
+  end
+
+== Install via gemcutter
+
+  gem install gemcutter
+  gem tumble
+  gem install sloono
+
+=== Test
+
+  TODO
+
+
+== Command line
+
+  TODO
+
+== Authors
+* Peter Suschlik
+
+== TODO
+
