@@ -2,24 +2,6 @@ require 'helper'
 
 context "Sloono::SMS" do
 
-  situation_helper do
-    def sms_options(options={})
-      {
-        :from   =>  1,
-        :to     =>  "0234/56789",
-        :text   =>  "Hello world",
-        :type   =>  :discount
-      }.update(options)
-    end
-  end
-
-  context "options" do
-    asserts("empty") { sms_options[:from] }.equals(1)
-    asserts("empty") { sms_options[:type] }.equals(:discount)
-    asserts("empty") { sms_options[:timestamp] }.nil
-    asserts("update") { sms_options(:timestamp => 1)[:timestamp] }.equals(1)
-  end
-
   context "validate" do
     setup { Sloono::SMS.new }
 

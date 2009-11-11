@@ -13,6 +13,7 @@ end
 
 watch('test/test_.*\.rb')  {|md| run md[0] }
 watch('lib/(.*)\.rb')      {|md| run "test/test_#{underscore(md[1])}.rb" }
+watch('test/helper.rb')    { run_tests }
 
 run_tests
 

@@ -4,7 +4,7 @@ context "Sloono::Response" do
 
   context "Status" do
 
-    situation_helper do
+    helper do
       def status(options={})
         options = { :code => 100, :text => "Status" }.update(options)
         Sloono::Response::Status.new(options[:code], options[:text])

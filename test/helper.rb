@@ -1,9 +1,10 @@
 require 'riot'
 
+require 'notify_report'
 require 'sloono'
 
 class Riot::Context
-  def situation_helper(&block)
+  def helper(&block)
     Riot::Situation.class_eval(&block)
   end
 end
