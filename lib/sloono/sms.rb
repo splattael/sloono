@@ -9,11 +9,11 @@ module Sloono
     def initialize(options={}, &block)
       @api = options[:api]
 
-      from      options[:from] || 1
-      to        options[:to]
-      text      options[:text] || ""
-      type      options[:type] || :discount
-      timestamp options[:timestamp] || 0
+      from        options[:from] || 1
+      to          options[:to]
+      text        options[:text] || ""
+      type        options[:type] || :discount
+      deliver_at  options[:deliver_at] || nil
 
       block.yield_or_eval(self) if block
     end
@@ -46,9 +46,9 @@ module Sloono
       @type
     end
 
-    def timestamp(arg=nil)
-      @timestamp = arg.to_i if arg
-      @timestamp
+    def deliver_at(arg=nil)
+      @deliver_at = arg.to_i if arg
+      @deliver_at
     end
   end
 

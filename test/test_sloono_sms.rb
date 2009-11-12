@@ -39,10 +39,10 @@ context "Sloono::SMS" do
       end
     end
 
-    context "timestamp" do
-      asserts("default") { topic.timestamp }.equals(0)
-      asserts("number") { topic.timestamp 1234 }.equals(1234)
-      asserts("time") { topic.timestamp Time.now }.equals(Time.now.to_i)
+    context "deliver_at" do
+      asserts("default") { topic.deliver_at }.equals(nil)
+      asserts("number") { topic.deliver_at 1234 }.equals(1234)
+      asserts("time") { topic.deliver_at Time.now }.equals(Time.now.to_i)
     end
   end # validate
 

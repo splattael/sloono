@@ -1,9 +1,12 @@
+require 'shellwords'
+
 class NotifyReport < Riot::TextReport
   PATH = ENV['HOME'] + "/bin/notify_redgreen"
 
   if File.exist?(PATH)
     def notify(color, msg)
-      system "#{PATH} #{color} #{msg}"
+      msg.gsub!(/</, '&lt;')
+      system Shellwords.shelljoin([PATH, color.to_s, msg])
     end
   else
     def notify(color, msg)
@@ -17,6 +20,7 @@ class NotifyReport < Riot::TextReport
   end
 
   def errored(error)
+    p error
     super
     notify(:red, "ERROR: #{error}")
   end
