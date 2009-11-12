@@ -7,7 +7,17 @@ module Sloono
       end
     end
 
+    module Object
+      unless respond_to?(:tap)
+        def tap(*args, &block)
+          block.call(self, *args)
+          self
+        end
+      end
+    end
+
   end
 end
 
 Proc.class_eval { include Sloono::Extensions::Proc }
+Object.class_eval { include Sloono::Extensions::Object }
