@@ -44,6 +44,11 @@ context "Sloono::SMS" do
       asserts("number") { topic.deliver_at 1234 }.equals(1234)
       asserts("time") { topic.deliver_at Time.now }.equals(Time.now.to_i)
     end
+
+    context "sent?" do
+      asserts("not sent") { !topic.sent? }
+      asserts("no response yet") { topic.response }.nil
+    end
   end # validate
 
   context "new" do
@@ -69,4 +74,5 @@ context "Sloono::SMS" do
       end.text
     end.equals("I win")
   end
-end 
+
+end

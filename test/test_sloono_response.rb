@@ -3,39 +3,6 @@ require 'helper'
 context "Sloono::Response" do
 
   context "parsing" do
-    helper do
-      def text(options={})
-        options = {
-          :status_code  => "100",
-          :status_text  => "SMS erfolgreich versendet",
-          :text         => "Dieser Text wird gesendet.",
-          :characters   =>  26,
-          :messages     =>  1,
-          :from         =>  "+49(123)456789",
-          :to           =>  "+49(321)987654",
-          :charge       =>  "0,059",
-          :deliver_at   =>  "Sofort"
-        }.update(options)
-
-        text =<<-TEXT
-          #{options[:status_code]}
-          #{options[:status_text]}
-
-          Text: #{options[:text]}
-          Zeichen: #{options[:characters]}
-          SMS: #{options[:messages]}
-          Absenderkennung: #{options[:from]}
-          Ziele: #{Array(options[:to]).join(",")}
-          Kosten: #{options[:charge]}
-          Versenden: #{options[:deliver_at]}
-        TEXT
-        text.gsub!(/^\s*/, '')
-      end
-
-      def response(text)
-        Sloono::Response.parse(text.is_a?(Hash) ? text(text) : text)
-      end
-    end
 
     context "default" do
       setup { response(text) }
@@ -61,6 +28,12 @@ context "Sloono::Response" do
       asserts("invalid text") { response("") }.raises(ArgumentError)
     end
 
+    context "invalid username/password" do
+      setup { response("200\r\nUsername und/oder Passwort falsch\r\n\r\n\r\n") }
+      asserts("status code") { topic.status.code }.equals(200)
+      asserts("status text") { topic.status.text }.equals("Username und/oder Passwort falsch")
+    end
+
   end # parsing
 
   context "forwards to status" do
@@ -80,7 +53,7 @@ context "Sloono::Response" do
         Sloono::Response::Status.new(options[:code], options[:text])
       end
     end
-    
+
     context "new" do
       setup { status(:code => 100, :text => "Status") }
       asserts("code") { topic.code }.equals(100)

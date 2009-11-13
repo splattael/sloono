@@ -2,6 +2,7 @@ require 'digest/md5'
 
 require 'sloono/extensions'
 require 'sloono/sms'
+require 'sloono/request'
 require 'sloono/response'
 
 module Sloono

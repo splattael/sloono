@@ -9,9 +9,12 @@ module Sloono
 
     def_delegators :@status, :success?, :error?, :input_error?, :system_error?, :symbol, :fake?
 
-    Parser = {
+    StatusParser = {
       :status_code  =>  /^(\d{3})$/,
       :status_text  =>  /^(\D[^:]+)$/,
+    }
+
+    Parser = {
       :text         =>  /^Text: (.*)/,
       :characters   =>  /^Zeichen: (.*)/,
       :messages     =>  /^SMS: (.*)/,
@@ -22,6 +25,31 @@ module Sloono
     }
 
     def parse(text)
+      text.gsub!(/\r/, '')
+
+      @status = parse_status!(text)
+
+      if status.success?
+        parse_content!(text)
+      end
+    end
+
+    def self.parse(text)
+      new.tap { |response| response.parse(text) }
+    end
+
+    private
+
+    def parse_status!(text)
+      # TODO ugly
+      text.gsub!(StatusParser[:status_code], '')
+      status_code = $1
+      text.gsub!(StatusParser[:status_text], '')
+      status_text = $1
+      Status.new(status_code, status_text)
+    end
+
+    def parse_content!(text)
       content = Parser.inject({}) do |mapped, (key, regexp)|
         if match = regexp.match(text)
           mapped[key] = match.captures.first
@@ -35,7 +63,6 @@ module Sloono
       end
 
       # Fix up
-      content[:status]      = Status.new(content.delete(:status_code), content.delete(:status_text))
       content[:characters]  = content[:characters].to_i
       content[:messages]    = content[:messages].to_i
       content[:to]          = content[:to].split(/,/) # TODO really?
@@ -46,9 +73,7 @@ module Sloono
       content.each { |key, value| instance_variable_set("@#{key}", value) }
     end
 
-    def self.parse(text)
-      new.tap { |response| response.parse(text) }
-    end
+    public
 
     # Status (code and text) of given Response.
     class Status
@@ -56,12 +81,12 @@ module Sloono
       INPUT_ERROR_RANGE = 200..299
       SYSTEM_ERROR_RANGE = 300..399
       FAKE_CODE = 101
-      
+
       attr_reader :code, :text
 
       def initialize(code, text)
         @code = code.to_i
-        @text = text
+        @text = text.to_s.strip
         raise ArgumentError.new("code out of range #{code}") if symbol == :unknown
       end
 
@@ -89,7 +114,7 @@ module Sloono
       def input_error?
         symbol == :input_error
       end
-      
+
       def system_error?
         symbol == :system_error
       end
