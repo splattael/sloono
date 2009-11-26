@@ -18,7 +18,7 @@ Jeweler::Tasks.new do |gem|
 
   gem.add_dependency "typhoeus", ">= 0.1.10"
 
-  gem.add_development_dependency "riot"
+  gem.add_development_dependency "riot", "= 0.10.1"
 
   gem.test_files = Dir.glob('test/test_*.rb')
 end

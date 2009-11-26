@@ -6,7 +6,7 @@ context "Sloono::Response" do
 
     context "default" do
       setup { response(text) }
-      topic.kind_of(Sloono::Response)
+      asserts("topic is reponse").kind_of(Sloono::Response)
       asserts("status") { topic.status }.kind_of(Sloono::Response::Status)
       asserts("status code") { topic.status.code }.equals(100)
       asserts("status text") { topic.status.text }.equals("SMS erfolgreich versendet")

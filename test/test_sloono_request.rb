@@ -24,7 +24,7 @@ context "Sloono::Request" do
       Sloono::Request.sms(:base_uri => "http://localhost")
     end
 
-    topic.kind_of(Sloono::Response)
+    asserts("topic is a Response").kind_of(Sloono::Response)
     asserts("error?") { topic.error? }
     asserts("status code") { topic.status.code }.equals(200)
     asserts("status text") { topic.status.text }.equals("invalid login")

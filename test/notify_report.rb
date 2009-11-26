@@ -1,4 +1,4 @@
-class NotifyReport < Riot::TextReport
+class NotifyReporter < Riot::DotMatrixReporter
   PATH = ENV['HOME'] + "/bin/notify_redgreen"
 
   if File.exist?(PATH)
@@ -12,22 +12,26 @@ class NotifyReport < Riot::TextReport
     end
   end
 
-  def failed(failure)
+  def fail(desc, message)
     super
-    notify(:red, "FAILURE: #{failure}")
+    notify(:red, "FAILURE: #{message}")
   end
 
-  def errored(error)
+  def error(desc, error)
     super
     notify(:red, "ERROR: #{error}")
   end
 
-  def results
+  def bad_results?
+    failures + errors > 0
+  end
+
+  def results(time_taken)
     super
-    if bad_results.empty?
-      notify(:green, "%d assertions, %d failures, %d errors in %s seconds" % [assertions, failures, errors, ("%0.6f" % time_taken)])
+    unless bad_results?
+      notify(:green, "%d passes, %d failures, %d errors in %s seconds" % [passes, failures, errors, ("%0.6f" % time_taken)])
     end
   end
 end
 
-Riot.reporter = NotifyReport.new
+Riot.reporter = NotifyReporter
