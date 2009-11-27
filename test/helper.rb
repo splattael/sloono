@@ -1,7 +1,9 @@
 require 'rubygems'
 require 'riot'
+require 'riot_notifier'
 
-require 'notify_report'
+Riot.reporter = RiotNotifier::RedgreenNotifier
+
 require 'sloono'
 
 class Riot::Context
