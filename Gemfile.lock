@@ -1,0 +1,26 @@
+PATH
+  remote: .
+  specs:
+    sloono (0.0.0)
+      typhoeus (>= 0.1.10)
+
+GEM
+  remote: http://rubygems.org/
+  specs:
+    mime-types (1.16)
+    riot (0.10.9)
+      term-ansicolor
+    riot_notifier (0.0.7)
+      riot (>= 0.10.9)
+    term-ansicolor (1.0.5)
+    typhoeus (0.2.4)
+      mime-types
+      mime-types
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  riot (= 0.10.9)
+  riot_notifier (= 0.0.7)
+  sloono!
